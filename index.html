@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Calculadora de economia entre scooter elétrica, moto e carro.">
+  <title>Calculadora de Economia - Scooter Elétrica</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div>
+        <span class="eyebrow">SIMULADOR</span>
+        <h1>Calculadora de economia</h1>
+        <p>Compare o custo estimado de uma scooter elétrica com uma moto e um carro.</p>
+      </div>
+      <button id="adminBtn" class="ghost-btn" type="button">⚙️ Administração</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card simulator">
+      <div class="section-title">
+        <div>
+          <span class="step">01</span>
+          <h2>Como você usa o veículo?</h2>
+        </div>
+        <span class="badge">Simulação</span>
+      </div>
+
+      <div class="form-grid">
+        <label>
+          <span>Quilômetros por dia</span>
+          <input id="kmDay" type="number" min="1" step="1" value="30">
+        </label>
+
+        <label>
+          <span>Dias de uso por mês</span>
+          <input id="daysMonth" type="number" min="1" max="31" step="1" value="30">
+        </label>
+
+        <label>
+          <span>Modelo da scooter</span>
+          <select id="scooterSelect"></select>
+        </label>
+      </div>
+
+      <button id="calculateBtn" class="primary-btn" type="button">Calcular minha economia</button>
+    </section>
+
+    <section id="results" class="results hidden">
+      <div class="section-title">
+        <div>
+          <span class="step">02</span>
+          <h2>Seu custo estimado</h2>
+        </div>
+        <span id="distanceLabel" class="badge"></span>
+      </div>
+
+      <div class="vehicle-grid">
+        <article class="vehicle-card electric featured">
+          <div class="vehicle-head">
+            <span class="vehicle-icon">🛵</span>
+            <div>
+              <span class="vehicle-type">ELÉTRICA</span>
+              <h3 id="scooterName">Scooter 1000W</h3>
+            </div>
+          </div>
+          <div class="price-row">
+            <strong id="scooterMonthly">R$ 0,00</strong>
+            <span>/mês</span>
+          </div>
+          <div class="mini-stats">
+            <span><b id="scooterDaily">R$ 0,00</b> / dia</span>
+            <span><b id="scooterYearly">R$ 0,00</b> / ano</span>
+          </div>
+          <div class="cost-breakdown" id="scooterBreakdown"></div>
+        </article>
+
+        <article class="vehicle-card">
+          <div class="vehicle-head">
+            <span class="vehicle-icon">🏍️</span>
+            <div>
+              <span class="vehicle-type">COMBUSTÃO</span>
+              <h3>Moto popular</h3>
+            </div>
+          </div>
+          <div class="price-row">
+            <strong id="motoMonthly">R$ 0,00</strong>
+            <span>/mês</span>
+          </div>
+          <div class="mini-stats">
+            <span><b id="motoDaily">R$ 0,00</b> / dia</span>
+            <span><b id="motoYearly">R$ 0,00</b> / ano</span>
+          </div>
+          <div class="cost-breakdown" id="motoBreakdown"></div>
+        </article>
+
+        <article class="vehicle-card">
+          <div class="vehicle-head">
+            <span class="vehicle-icon">🚗</span>
+            <div>
+              <span class="vehicle-type">COMBUSTÃO</span>
+              <h3>Carro popular</h3>
+            </div>
+          </div>
+          <div class="price-row">
+            <strong id="carMonthly">R$ 0,00</strong>
+            <span>/mês</span>
+          </div>
+          <div class="mini-stats">
+            <span><b id="carDaily">R$ 0,00</b> / dia</span>
+            <span><b id="carYearly">R$ 0,00</b> / ano</span>
+          </div>
+          <div class="cost-breakdown" id="carBreakdown"></div>
+        </article>
+      </div>
+
+      <section class="savings-grid">
+        <div class="saving-card">
+          <span>🛵 vs. 🏍️</span>
+          <h3>Economia estimada contra a moto</h3>
+          <strong id="saveMotoMonth">R$ 0,00/mês</strong>
+          <p id="saveMotoYear">R$ 0,00 por ano</p>
+        </div>
+        <div class="saving-card">
+          <span>🛵 vs. 🚗</span>
+          <h3>Economia estimada contra o carro</h3>
+          <strong id="saveCarMonth">R$ 0,00/mês</strong>
+          <p id="saveCarYear">R$ 0,00 por ano</p>
+        </div>
+      </section>
+
+      <section class="chart-card card">
+        <h2>Comparação mensal</h2>
+        <div id="chart" class="chart" aria-label="Gráfico de custos mensais"></div>
+      </section>
+
+      <div class="actions">
+        <button id="shareBtn" class="primary-btn" type="button">📲 Compartilhar resultado</button>
+        <button id="recalculateBtn" class="secondary-btn" type="button">↻ Nova simulação</button>
+      </div>
+
+      <p class="disclaimer">
+        * Valores estimados para fins de comparação. O custo real varia conforme modelo,
+        peso, velocidade, terreno, trânsito, manutenção, preços de energia/combustível,
+        seguro, tributos e condições de uso. Tributos e custos aplicáveis ao veículo devem
+        ser confirmados conforme sua categoria e legislação vigente.
+      </p>
+    </section>
+  </main>
+
+  <div id="adminModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
+    <div class="modal-box">
+      <div class="modal-head">
+        <div>
+          <span class="eyebrow">PAINEL LOCAL</span>
+          <h2 id="adminTitle">Configurações</h2>
+        </div>
+        <button id="closeAdmin" class="close-btn" type="button">×</button>
+      </div>
+
+      <div id="loginPanel">
+        <p>Área protegida para editar os valores da calculadora.</p>
+        <label>
+          <span>Senha</span>
+          <input id="adminPassword" type="password" autocomplete="off">
+        </label>
+        <button id="loginBtn" class="primary-btn" type="button">Entrar</button>
+        <small>Senha inicial: <b>admin123</b>. Altere-a no próprio painel.</small>
+      </div>
+
+      <div id="settingsPanel" class="hidden">
+        <div class="admin-tabs">
+          <button class="tab active" data-tab="general" type="button">Geral</button>
+          <button class="tab" data-tab="scooters" type="button">Scooters</button>
+          <button class="tab" data-tab="vehicles" type="button">Moto/Carro</button>
+        </div>
+
+        <div id="generalTab" class="tab-content">
+          <h3>Preços e custos gerais</h3>
+          <div class="form-grid">
+            <label><span>Energia elétrica (R$/kWh)</span><input id="cfgEnergy" type="number" step="0.0001"></label>
+            <label><span>Gasolina (R$/L)</span><input id="cfgGas" type="number" step="0.01"></label>
+            <label><span>Senha administrativa</span><input id="cfgPassword" type="text"></label>
+          </div>
+        </div>
+
+        <div id="scootersTab" class="tab-content hidden">
+          <div class="admin-list-head">
+            <h3>Modelos de scooter</h3>
+            <button id="addScooter" class="secondary-btn small" type="button">+ Adicionar modelo</button>
+          </div>
+          <div id="scooterAdminList"></div>
+        </div>
+
+        <div id="vehiclesTab" class="tab-content hidden">
+          <h3>Custos de referência</h3>
+          <div class="admin-vehicle">
+            <h4>🏍️ Moto popular</h4>
+            <div class="form-grid compact">
+              <label><span>Consumo (km/L)</span><input id="motoConsumption" type="number" step="0.1"></label>
+              <label><span>Manutenção (R$/km)</span><input id="motoMaintenance" type="number" step="0.001"></label>
+              <label><span>Pneus/freios (R$/km)</span><input id="motoTires" type="number" step="0.001"></label>
+              <label><span>Óleo/filtros (R$/km)</span><input id="motoOil" type="number" step="0.001"></label>
+              <label><span>Relação (R$/km)</span><input id="motoChain" type="number" step="0.001"></label>
+              <label><span>IPVA anual (R$)</span><input id="motoIpva" type="number" step="1"></label>
+              <label><span>Licenciamento anual (R$)</span><input id="motoLicense" type="number" step="1"></label>
+              <label><span>Seguro anual (R$)</span><input id="motoInsurance" type="number" step="1"></label>
+              <label><span>Depreciação anual (R$)</span><input id="motoDepreciation" type="number" step="1"></label>
+            </div>
+          </div>
+
+          <div class="admin-vehicle">
+            <h4>🚗 Carro popular</h4>
+            <div class="form-grid compact">
+              <label><span>Consumo (km/L)</span><input id="carConsumption" type="number" step="0.1"></label>
+              <label><span>Manutenção (R$/km)</span><input id="carMaintenance" type="number" step="0.001"></label>
+              <label><span>Pneus/freios (R$/km)</span><input id="carTires" type="number" step="0.001"></label>
+              <label><span>Óleo/filtros (R$/km)</span><input id="carOil" type="number" step="0.001"></label>
+              <label><span>IPVA anual (R$)</span><input id="carIpva" type="number" step="1"></label>
+              <label><span>Licenciamento anual (R$)</span><input id="carLicense" type="number" step="1"></label>
+              <label><span>Seguro anual (R$)</span><input id="carInsurance" type="number" step="1"></label>
+              <label><span>Depreciação anual (R$)</span><input id="carDepreciation" type="number" step="1"></label>
+            </div>
+          </div>
+        </div>
+
+        <div class="admin-actions">
+          <button id="saveSettings" class="primary-btn" type="button">Salvar configurações</button>
+          <button id="resetSettings" class="danger-btn" type="button">Restaurar padrão</button>
+        </div>
+        <p class="local-note">Esta primeira versão salva as configurações no navegador (localStorage). Para compartilhar um painel administrativo entre computadores, migre os dados para Supabase.</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
